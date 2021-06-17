@@ -1,0 +1,162 @@
+CREATE TABLE Member
+(`ID` varchar(10) NOT NULL,
+`Name` varchar(10),
+`Password` varchar(20),
+`CharNum` int(3),
+PRIMARY KEY(`ID`));
+
+CREATE TABLE Characters
+(`C#` varchar(10) NOT NULL,
+`image` varchar(20),
+`Name` varchar(10),
+
+PRIMARY KEY(`C#`));
+
+CREATE TABLE Movie
+(`M#` varchar(10) NOT NULL,
+`title` varchar(20),
+`genre` varchar(20),
+`rating` float,
+PRIMARY KEY(`M#`));
+
+CREATE TABLE Theater
+(`Name` varchar(10) NOT NULL,
+`address` varchar(30),
+PRIMARY KEY(`Name`));
+
+CREATE TABLE Seat
+(`SeatNum` varchar(10) NOT NULL,
+`price` int,
+PRIMARY KEY(`SeatNum`));
+
+CREATE TABLE taste
+(`ID` varchar(10) NOT NULL,
+`C#` varchar(10) NOT NULL,
+PRIMARY KEY(`ID`, `C#`),
+FOREIGN KEY(`ID`) REFERENCES Member(`ID`),
+FOREIGN KEY(`C#`) REFERENCES Characters(`C#`));
+
+CREATE TABLE watched
+(`ID` varchar(10) NOT NULL,
+`M#` varchar(10) NOT NULL,
+`date` DATE,
+`rate` float,
+PRIMARY KEY(`ID`, `M#`),
+FOREIGN KEY(`ID`) REFERENCES Member(`ID`),
+FOREIGN KEY(`M#`) REFERENCES Movie(`M#`));
+
+CREATE TABLE screen
+(`M#` varchar(10) NOT NULL,
+`Name` varchar(10) NOT NULL,
+`date` DATE,
+`term` int,
+PRIMARY KEY(`M#`, `Name`),
+FOREIGN KEY(`M#`) REFERENCES Movie(`M#`),
+FOREIGN KEY(`Name`) REFERENCES Theater(`Name`));
+
+CREATE TABLE reservation
+(`R#` int auto_increment,
+`ID` varchar(10) NOT NULL,
+`M#` varchar(10) NOT NULL,
+`date` datetime,
+`place` varchar(10),
+`seat` varchar(20),
+`price` int,
+`pay` varchar(10),
+`rate` int,
+PRIMARY KEY(`R#`),
+FOREIGN KEY(`ID`) REFERENCES Member(`ID`),
+FOREIGN KEY(`M#`) REFERENCES Movie(`M#`));
+
+CREATE TABLE tRs
+(`Name` varchar(10) NOT NULL,
+`SeatNum` varchar(10) NOT NULL,
+PRIMARY KEY(`Name`, `SeatNum`),
+FOREIGN KEY(`Name`) REFERENCES Theater(`Name`),
+FOREIGN KEY(`SeatNum`) REFERENCES Seat(`SeatNum`));
+
+
+
+INSERT INTO member values ('1','Kim','1234',1);
+INSERT INTO member values ('2','Lee','2345', 2);
+INSERT INTO member values ('3','Park','3456', 3);
+INSERT INTO member values ('4','Choi','4567', 4);
+INSERT INTO member values ('5','Kang','5678', 5);
+INSERT INTO member values ('6','Yoon','6789', 6);
+INSERT INTO member values ('7','Lim','7890', 1);
+INSERT INTO characters values ('C1','','c1');
+INSERT INTO characters values ('C2','','c2');
+INSERT INTO characters values ('C3','','c3');
+INSERT INTO characters values ('C4','','c4');
+INSERT INTO characters values ('C5','','c5');
+INSERT INTO characters values ('C6','','c6');
+INSERT INTO characters values ('C7','','c7');
+INSERT INTO characters values ('C8','','c8');
+INSERT INTO characters values ('C9','','c9');
+INSERT INTO characters values ('C10','','c10');
+INSERT INTO movie values ('M1','해리포터','fantasy,adventure','9.0');
+INSERT INTO movie values ('M2','나의 소녀시대','romance,comedy','8.5');
+INSERT INTO movie values ('M3','극한직업','action,comedy','7.8');
+INSERT INTO movie values ('M4','건축학개론','romance','8.0');
+INSERT INTO movie values ('M5','1987','reality','8.3');
+INSERT INTO movie values ('M6','7번방의 선물','comedy','8.0');
+INSERT INTO movie values ('M7','트와일라잇','romance,fantasy','9.0');
+INSERT INTO movie values ('M8','아저씨','comedy','7.4');
+INSERT INTO movie values ('M9','아가씨','comedy','6.8');
+INSERT INTO movie values ('M10','Mr.& Mrs.Smith','romance,action','9.1');
+INSERT INTO movie values ('M11','그랜드부다페스트호텔','mystery','7.5');
+INSERT INTO movie values ('M12','겟아웃','mystery,fear','8.8');
+INSERT INTO theater values ('강동점','서울시 강동');
+INSERT INTO theater values ('강서점','서울시 강서');
+INSERT INTO theater values ('강남점','서울시 강남');
+INSERT INTO theater values ('강북점','서울시 강북');
+INSERT INTO seat values('A1','12000');
+INSERT INTO seat values('A2','12000');
+INSERT INTO seat values('A3','12000');
+INSERT INTO seat values('A4','12000');
+INSERT INTO seat values('B1','12000');
+INSERT INTO seat values('B2','12000');
+INSERT INTO seat values('B3','12000');
+INSERT INTO seat values('B4','12000');
+INSERT INTO taste values('1','C1');
+INSERT INTO taste values('2','C3');
+INSERT INTO taste values('3','C5');
+INSERT INTO taste values('4','C8');
+INSERT INTO taste values('5','C3');
+INSERT INTO taste values('6','C2');
+INSERT INTO taste values('7','C6');
+
+
+
+INSERT INTO screen values('M1','강동점','2021-05-14','21');
+INSERT INTO screen values('M2','강서점','2021-05-17','21');
+INSERT INTO screen values('M3','강동점','2021-05-19','21');
+INSERT INTO screen values('M4','강남점','2021-05-21','21');
+INSERT INTO screen values('M5','강북점','2021-05-25','21');
+INSERT INTO screen values('M6','강서점','2021-05-11','21');
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('1','M1','2021-05-16 09:30:00','강동점','A20','8000','신용카드',4);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('2','M5','2021-05-25 12:45:00','강북점','A12 A13','16000','현금',5);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('3','M4','2021-05-22 11:30:00','강남점','B14','8000','카카오페이',3);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('4','M3','2021-05-20 13:45:00','강동점','B15','8000','제로페이',1);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('6','M6','2021-05-14 10:10:00','강서점','A4','8000','신용카드',2);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('1','M3','2021-04-20 16:20:00','강동점','C10','8000','신용카드',4);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('2','M5','2021-05-05 16:00:00','강북점','B2 B3','16000','현금',5);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('2','M3','2021-06-01 15:25:00','강남점','C4','8000','카카오페이',3);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('3','M7','2021-03-14 12:15:00','강서점','A6','8000','신용카드',2);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('3','M9','2021-04-25 17:25:00','강북점','A16 A17','16000','현금',5);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('3','M2','2021-05-12 18:10:00','강남점','B18','8000','카카오페이',3);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('4','M6','2021-02-20 18:00:00','강동점','B19','8000','제로페이',1);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('4','M2','2021-04-14 14:50:00','강서점','A14','8000','신용카드',2);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('4','M8','2021-05-25 19:30:00','강북점','A2 A3','16000','현금',5);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('5','M9','2021-03-22 20:40:00','강남점','C17','8000','카카오페이',3);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('5','M2','2021-05-20 9:30:00','강동점','C1','8000','제로페이',1);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('5','M3','2021-06-14 17:45:00','강서점','A11','8000','신용카드',2);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('5','M5','2021-04-16 13:45:00','강동점','B1','8000','신용카드',4);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('6','M4','2021-05-25 16:00:00','강북점','C2 C3','16000','현금',5);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('6','M7','2021-06-22 11:30:00','강남점','B7','8000','카카오페이',3);
+INSERT INTO reservation(`ID`, `M#`, `date`, `place`, `seat`, `price`, `pay`, `rate`) values('6','M1','2021-02-20 16:20:00','강동점','B1','8000','제로페이',1);
+INSERT INTO trs values('강동점','A1');
+INSERT INTO trs values('강서점','A3');
+INSERT INTO trs values('강동점','A2');
+INSERT INTO trs values('강남점','B1');
+INSERT INTO trs values('강북점','B3');
